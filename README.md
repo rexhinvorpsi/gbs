@@ -1,3 +1,4 @@
+![gbs-bulpros-company.png](https://github.com/rexhinvorpsi/gbs/blob/master/images/gbs-bulpros-company.png)
 # Quick Reference
 - Maintained by: [GBS Workflow Manager Team](https://www.gbs.com/en/workflowmanagement)
 - Where to get help: [our Support](https://www.gbs.com/en/contactus)
