@@ -96,4 +96,4 @@ volumes:
 `
 Navigate to http://localhost:8080
 You should see the inital login page.
-![workflowmanager.png](https://github.com/rexhinvorpsi/gbs/blob/master/images/workflowmanager.png)
+![workflowmanager.png](https://github.com/rexhinvorpsi/gbs/blob/master/images/workflowmanager.PNG)
