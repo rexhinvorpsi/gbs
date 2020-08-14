@@ -41,8 +41,8 @@ services:
     container_name: wfm-postgres
     image: postgres
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: pavone
+      POSTGRES_USER: {postgres_user}
+      POSTGRES_PASSWORD: {postgres_pass}
       POSTGRES_DB: postgres
       PGDATA: /data/postgres
     volumes:
@@ -55,19 +55,19 @@ services:
     restart: unless-stopped
 
   workflowmanager:
-    image: ${DOCKER_REGISTRY:-}/workflowmanager:${TAG:-latest}
+    image: gbseuropagmbh/workflowmanager:${TAG:-latest}
     container_name: wfm-wildfly
     environment:
       - Datasource_MongoDB_Connectionstring=mongodb://wfm-mongodb:27017
       - Datasource_ProcessEngine_Connectionstring=jdbc:postgresql://wfm-postgres:5432/ProcessEngine
-      - Datasource_ProcessEngine_Username=root
-      - Datasource_ProcessEngine_Password=pavone
+      - Datasource_ProcessEngine_Username={postgres_user}
+      - Datasource_ProcessEngine_Password={postgres_pass}
       - Datasource_OD_Connectionstring=jdbc:postgresql://wfm-postgres:5432/OD
-      - Datasource_OD_Username=root
-      - Datasource_OD_Password=pavone
+      - Datasource_OD_Username={postgres_user}
+      - Datasource_OD_Password={postgres_pass}
       - Datasource_AgentManager_Connectionstring=jdbc:postgresql://wfm-postgres:5432/agman
-      - Datasource_AgentManager_Username=root
-      - Datasource_AgentManager_Password=pavone
+      - Datasource_AgentManager_Username={postgres_user}
+      - Datasource_AgentManager_Password={postgres_pass}
       - Datasource_Driver_Class=org.postgresql.Driver
       - Datasource_Driver_Module=org.postgres
       - Datasource_XA_Datasource_Class=org.postgresql.xa.PGXADataSource
@@ -77,7 +77,7 @@ services:
     ports: 
       - 8080:8080
       - 9990:9990
-    command: bash -c "/opt/jboss/wildfly/bin/add-user.sh admin pavone --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
+    command: bash -c "/opt/jboss/wildfly/bin/add-user.sh admin {postgres_pass} --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
     networks:
       - postgres
     depends_on:
@@ -96,5 +96,7 @@ volumes:
 `
 
 Navigate to http://localhost:8080
+
 You should see the inital login page.
+
 ![workflowmanager.png](https://github.com/rexhinvorpsi/gbs/blob/master/images/workflowmanager.PNG)
